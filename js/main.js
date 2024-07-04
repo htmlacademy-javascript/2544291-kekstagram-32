@@ -64,13 +64,21 @@ const MESSAGES = [
 ];
 
 const MAX_VALUE_PHOTOS = 25;
-const MIN_VALUE_LIKES = 15;
-const MAX_VALUE_LIKES = 200;
-const MIN_VALUE_COMMENTS = 0;
-const MAX_VALUE_COMMENTS = 30;
-const MIN_VALUE_AVATAR = 1;
-const MAX_VALUE_AVATAR = 6;
 
+const VALUE_LIKES = {
+  min: 15,
+  max: 200,
+};
+
+const VALUE_COMMENTS = {
+  min: 0,
+  max: 30,
+};
+
+const VALUE_AVATARS = {
+  min: 1,
+  max: 6,
+};
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -81,29 +89,33 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-let counter = 0;
 const createId = () => {
-  counter++;
-  return counter;
+  let counter = 0;
+  return () => {
+    counter++;
+    return counter;
+  };
 };
 
+const createIdUser = createId();
+
 const createUsers = () => ({
-  id: createId(),
-  avatar: `img/avatar-${getRandomInteger(MIN_VALUE_AVATAR, MAX_VALUE_AVATAR)}.svg`,
+  id: createIdUser(),
+  avatar: `img/avatar-${getRandomInteger(VALUE_AVATARS.min, VALUE_AVATARS.max)}.svg`,
   message: getRandomArrayElement(MESSAGES),
   name: getRandomArrayElement(NAMES),
 });
 
-
 const createPhotos = () => {
-  const id = createId();
+  const idGenerator = createId();
+  const id = idGenerator();
   const url = `photos/${id}.jpg`;
   return {
     id,
     url,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInteger(MIN_VALUE_LIKES, MAX_VALUE_LIKES),
-    comments:  Array.from({length: getRandomInteger(MIN_VALUE_COMMENTS, MAX_VALUE_COMMENTS)}, createUsers)
+    likes: getRandomInteger(VALUE_LIKES.min, VALUE_LIKES.max),
+    comments:  Array.from({length: getRandomInteger(VALUE_COMMENTS.min, VALUE_COMMENTS.max)}, createUsers)
   };
 };
 
