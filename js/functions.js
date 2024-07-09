@@ -47,4 +47,3 @@ const extractNumbers = (input) => {
 };
 
 extractNumbers('1 кефир, 0.5 батона');
-
