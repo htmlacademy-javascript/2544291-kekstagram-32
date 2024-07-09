@@ -65,17 +65,17 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const valueLikes = {
+const ValueLikes = {
   MIN: 15,
   MAX: 200,
 };
 
-const valueComments = {
+const ValueComments = {
   MIN: 0,
   MAX: 30,
 };
 
-const valueAvatars = {
+const ValueAvatars = {
   MIN: 1,
   MAX: 6,
 };
@@ -86,7 +86,7 @@ const createIdUser = createId();
 
 const createUsers = () => ({
   id: createIdUser(),
-  avatar: `img/avatar-${getRandomInteger(valueAvatars.MIN, valueAvatars.MAX)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(ValueAvatars.MIN, ValueAvatars.MAX)}.svg`,
   message: getRandomArrayElement(messages),
   name: getRandomArrayElement(names),
 });
@@ -99,8 +99,8 @@ const createPhotos = () => {
     id,
     url,
     description: getRandomArrayElement(descriptions),
-    likes: getRandomInteger(valueLikes.MIN, valueLikes.MAX),
-    comments:  Array.from({length: getRandomInteger(valueComments.MIN, valueComments.MAX)}, createUsers)
+    likes: getRandomInteger(ValueLikes.MIN, ValueLikes.MAX),
+    comments:  Array.from({length: getRandomInteger(ValueComments.MIN, ValueComments.MAX)}, createUsers)
   };
 };
 
