@@ -65,8 +65,6 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const MAX_VALUE_PHOTOS = 25;
-
 const valueLikes = {
   MIN: 15,
   MAX: 200,
@@ -81,6 +79,8 @@ const valueAvatars = {
   MIN: 1,
   MAX: 6,
 };
+
+const MAX_VALUE_PHOTOS = 25;
 
 const createIdUser = createId();
 
@@ -104,4 +104,12 @@ const createPhotos = () => {
   };
 };
 
-export {createPhotos, MAX_VALUE_PHOTOS};
+
+const photos = Array.from({length: MAX_VALUE_PHOTOS}, (_, index) => {
+  const photo = createPhotos();
+  photo.id = index + 1;
+  photo.url = `photos/${photo.id}.jpg`;
+  return photo;
+});
+
+export {photos};
