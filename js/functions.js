@@ -47,3 +47,34 @@ const extractNumbers = (input) => {
 };
 
 extractNumbers('1 кефир, 0.5 батона');
+
+// Напишите функцию, которая принимает время начала и конца рабочего дня,
+// а также время старта и продолжительность встречи в минутах и возвращает true,
+// если встреча не выходит за рамки рабочего дня, и false, если выходит.
+
+const checkMeetingTime = (startTimeOfDay, endTimeOfDay, meetingStartTime, meetingDuration) => {
+
+  const convertToMinutes = (time) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+  };
+
+  const startOfWorkDay = convertToMinutes(startTimeOfDay);
+  const endOfWorkDay = convertToMinutes(endTimeOfDay);
+  const startTimeOfMeeting = convertToMinutes(meetingStartTime);
+
+  return startTimeOfMeeting >= startOfWorkDay && startTimeOfMeeting + meetingDuration <= endOfWorkDay;
+};
+
+
+// eslint-disable-next-line no-console
+console.log(checkMeetingTime('08:00', '17:30', '14:00', 90)); // true
+// eslint-disable-next-line no-console
+console.log(checkMeetingTime('8:0', '10:0', '8:0', 120)); // true
+// eslint-disable-next-line no-console
+console.log(checkMeetingTime('08:00', '14:30', '14:00', 90)); // false
+// eslint-disable-next-line no-console
+console.log(checkMeetingTime('14:00', '17:30', '08:0', 90)); // false
+// eslint-disable-next-line no-console
+console.log(checkMeetingTime('8:00', '17:30', '08:00', 900)); // false
+
