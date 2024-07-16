@@ -101,6 +101,6 @@ const createPhotos = () => ({
   comments:  Array.from({length: getRandomInteger(ValueComments.MIN, ValueComments.MAX)}, createUsers)
 });
 
-const photos = () => Array.from({length: MAX_VALUE_PHOTOS}, createPhotos);
+const getPhotos = () => Array.from({length: MAX_VALUE_PHOTOS}, createPhotos);
 
-export { photos };
+export { getPhotos };

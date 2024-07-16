@@ -1,25 +1,24 @@
-import { photos } from './data.js';
-
 const picturesList = document.querySelector('.pictures');
 const picturesTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
-const pictures = photos();
-
 const picturesListFragment = document.createDocumentFragment();
 
-pictures.forEach(({url, description, likes, comments}) => {
-  const pictureElement = picturesTemplate.cloneNode(true);
+const drawPictures = (pictures) => {
+  pictures.forEach(({url, description, likes, comments}) => {
+    const pictureElement = picturesTemplate.cloneNode(true);
 
-  const picture = pictureElement.querySelector('.picture__img');
-  const pictureLikes = pictureElement.querySelector('.picture__likes');
-  const pictureComments = pictureElement.querySelector('.picture__comments');
+    const pictureImgElement = pictureElement.querySelector('.picture__img');
+    const pictureLikesElement = pictureElement.querySelector('.picture__likes');
+    const pictureCommentsElement = pictureElement.querySelector('.picture__comments');
 
-  picture.src = url;
-  picture.alt = description;
-  pictureLikes.textContent = likes;
-  pictureComments.textContent = comments.length;
+    pictureImgElement.src = url;
+    pictureImgElement.alt = description;
+    pictureLikesElement.textContent = likes;
+    pictureCommentsElement.textContent = comments.length;
 
-  picturesListFragment.append(pictureElement);
-});
+    picturesListFragment.appendChild(pictureElement);
+  });
 
-picturesList.append(picturesListFragment);
+  picturesList.appendChild(picturesListFragment);
+};
+
+export { drawPictures };
