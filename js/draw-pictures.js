@@ -1,5 +1,6 @@
-const picturesList = document.querySelector('.pictures');
+const picturesListElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
+const picturesListFragment = document.createDocumentFragment();
 
 const drawPictures = (pictures) => {
   pictures.forEach(({url, description, likes, comments}) => {
@@ -14,8 +15,9 @@ const drawPictures = (pictures) => {
     pictureLikesElement.textContent = likes;
     pictureCommentsElement.textContent = comments.length;
 
-    picturesList.appendChild(pictureElement);
+    picturesListFragment.appendChild(pictureElement);
   });
+  picturesListElement.appendChild(picturesListFragment);
 };
 
 export { drawPictures };
