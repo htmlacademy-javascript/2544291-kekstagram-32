@@ -1,4 +1,4 @@
-import {photos} from './data.js';
+import { getPhotos } from './data.js';
+import { drawPictures } from './draw-pictures.js';
 
-// eslint-disable-next-line no-console
-console.log(photos);
+drawPictures(getPhotos());
