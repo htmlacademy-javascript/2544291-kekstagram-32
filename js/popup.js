@@ -18,7 +18,7 @@ const renderPopup = (listPhotos) => {
   };
 
   const addComments = (comments) => {
-    clearComments ();
+    clearComments();
     comments.forEach(({avatar, name, message}) => {
       const commentItem = commentElement.cloneNode(true);
       const pictureElement = commentItem.querySelector('.social__picture');
