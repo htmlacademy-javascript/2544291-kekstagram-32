@@ -8,11 +8,17 @@ const renderPopup = (listPhotos) => {
   const PopupCloseElement = document.querySelector('.big-picture__cancel');
   const commentsListElement = document.querySelector('.social__comments');
   const commentElement = document.querySelector('.social__comment');
-  const commentsLoader = document.querySelector('.comments-loader');
-  const socialComments = bigPictureElement.querySelector('.social__comment-count');
+  const commentsLoaderElement = document.querySelector('.comments-loader');
+  const socialCommentsElement = bigPictureElement.querySelector('.social__comment-count');
+
+  const clearComments = () => {
+    while (commentsListElement.firstChild) {
+      commentsListElement.removeChild(commentsListElement.firstChild);
+    }
+  };
 
   const addComments = (comments) => {
-    commentsListElement.textContent = '';
+    clearComments ();
     comments.forEach(({avatar, name, message}) => {
       const commentItem = commentElement.cloneNode(true);
       const pictureElement = commentItem.querySelector('.social__picture');
@@ -52,8 +58,8 @@ const renderPopup = (listPhotos) => {
   const openPopup = () => {
     bigPictureElement.classList.remove('hidden');
     document.body.classList.add('modal-open');
-    commentsLoader.classList.add('hidden');
-    socialComments.classList.add('hidden');
+    commentsLoaderElement.classList.add('hidden');
+    socialCommentsElement.classList.add('hidden');
     document.addEventListener('keydown', onEscKeydown);
   };
 
