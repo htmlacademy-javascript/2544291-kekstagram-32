@@ -1,7 +1,6 @@
 const picturesListElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
-
 const drawPictures = (pictures) => {
   pictures.forEach((picture) => {
     const pictureElement = pictureTemplateElement.cloneNode(true);
@@ -19,4 +18,4 @@ const drawPictures = (pictures) => {
   });
 };
 
-export { drawPictures, picturesListElement };
+export { drawPictures };

@@ -1,33 +1,12 @@
 import { isEscapeKey } from './util.js';
-import { picturesListElement } from './draw-pictures.js';
-
+import { clearComments, addComments } from './comments.js';
 
 const renderPopup = (listPhotos) => {
-
+  const picturesContainerElement = document.querySelector('.pictures');
   const bigPictureElement = document.querySelector('.big-picture');
-  const PopupCloseElement = document.querySelector('.big-picture__cancel');
-  const commentsListElement = document.querySelector('.social__comments');
-  const commentElement = document.querySelector('.social__comment');
+  const popupCloseElement = document.querySelector('.big-picture__cancel');
   const commentsLoaderElement = document.querySelector('.comments-loader');
   const socialCommentsElement = bigPictureElement.querySelector('.social__comment-count');
-
-  const clearComments = () => {
-    while (commentsListElement.firstChild) {
-      commentsListElement.removeChild(commentsListElement.firstChild);
-    }
-  };
-
-  const addComments = (comments) => {
-    clearComments();
-    comments.forEach(({avatar, name, message}) => {
-      const commentItem = commentElement.cloneNode(true);
-      const pictureElement = commentItem.querySelector('.social__picture');
-      pictureElement.src = avatar;
-      pictureElement.alt = name;
-      commentItem.querySelector('.social__text').textContent = message;
-      commentsListElement.append(commentItem);
-    });
-  };
 
   const displayPopupImage = (photoId) => {
     const index = listPhotos.findIndex((photo) => photoId === photo.id.toString());
@@ -39,6 +18,7 @@ const renderPopup = (listPhotos) => {
     bigPictureElement.querySelector('.likes-count').textContent = likes;
     bigPictureElement.querySelector('.social__comment-total-count').textContent = comments.length;
     bigPictureElement.querySelector('.social__comment-shown-count').textContent = comments.length;
+    clearComments();
     addComments(comments);
   };
 
@@ -71,9 +51,9 @@ const renderPopup = (listPhotos) => {
     }
   };
 
-  picturesListElement.addEventListener('click', onClickPhoto);
+  picturesContainerElement.addEventListener('click', onClickPhoto);
 
-  PopupCloseElement.addEventListener('click', (evt) => {
+  popupCloseElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     closePopup();
   });
