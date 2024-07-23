@@ -9,12 +9,12 @@ const clearComments = () => {
 
 const addComments = (comments) => {
   comments.forEach(({avatar, name, message}) => {
-    const commentItem = commentElement.cloneNode(true);
-    const pictureElement = commentItem.querySelector('.social__picture');
+    const commentItemElement = commentElement.cloneNode(true);
+    const pictureElement = commentItemElement.querySelector('.social__picture');
     pictureElement.src = avatar;
     pictureElement.alt = name;
-    commentItem.querySelector('.social__text').textContent = message;
-    commentsListElement.append(commentItem);
+    commentItemElement.querySelector('.social__text').textContent = message;
+    commentsListElement.append(commentItemElement);
   });
 };
 
