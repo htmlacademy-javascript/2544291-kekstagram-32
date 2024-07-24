@@ -103,4 +103,6 @@ const createPhotos = () => ({
 
 const getPhotos = () => Array.from({length: MAX_VALUE_PHOTOS}, createPhotos);
 
-export { getPhotos };
+const listPhotos = getPhotos();
+
+export { listPhotos };
