@@ -17,9 +17,9 @@ const clearComments = () => {
 };
 
 const addComments = () => {
-  const commentsElement = pictureComments.slice(currentCommentsCount, currentCommentsCount + MAX_COMMENTS_COUNT);
-  const commentsElementLength = commentsElement.length + currentCommentsCount;
-  commentsElement.forEach(({avatar, name, message}) => {
+  const comments = pictureComments.slice(currentCommentsCount, currentCommentsCount + MAX_COMMENTS_COUNT);
+  const commentsLength = comments.length + currentCommentsCount;
+  comments.forEach(({avatar, name, message}) => {
     const commentItemElement = commentElement.cloneNode(true);
     const pictureElement = commentItemElement.querySelector('.social__picture');
     pictureElement.src = avatar;
@@ -27,9 +27,9 @@ const addComments = () => {
     commentItemElement.querySelector('.social__text').textContent = message;
     commentsListElement.append(commentItemElement);
   });
-  commentsShownElement.textContent = `${commentsElementLength}`;
-  commentsTotalElement.textContent = `${pictureComments.length}`;
-  if (pictureComments.length <= commentsElementLength) {
+  commentsShownElement.textContent = commentsLength;
+  commentsTotalElement.textContent = pictureComments.length;
+  if (pictureComments.length <= commentsLength) {
     commentsLoaderElement.classList.add('hidden');
   }
   currentCommentsCount += MAX_COMMENTS_COUNT;
@@ -37,8 +37,9 @@ const addComments = () => {
 
 const displayComments = (сomments) => {
   pictureComments = сomments;
+  clearComments();
   addComments();
   commentsLoaderElement.addEventListener('click', addComments);
 };
 
-export { clearComments, displayComments };
+export { displayComments };

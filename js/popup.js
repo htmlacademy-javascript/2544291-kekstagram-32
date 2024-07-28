@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { clearComments, displayComments } from './comments.js';
+import { displayComments } from './comments.js';
 
 const renderPopup = (listPhotos) => {
   const picturesContainerElement = document.querySelector('.pictures');
@@ -14,7 +14,6 @@ const renderPopup = (listPhotos) => {
     popupImage.alt = description;
     bigPictureElement.querySelector('.social__caption').textContent = description;
     bigPictureElement.querySelector('.likes-count').textContent = likes;
-    clearComments();
     displayComments(comments);
   };
 
