@@ -1,12 +1,10 @@
 import { isEscapeKey } from './util.js';
-import { clearComments, addComments } from './comments.js';
+import { displayComments } from './comments.js';
 
 const renderPopup = (listPhotos) => {
   const picturesContainerElement = document.querySelector('.pictures');
   const bigPictureElement = document.querySelector('.big-picture');
   const popupCloseElement = document.querySelector('.big-picture__cancel');
-  const commentsLoaderElement = document.querySelector('.comments-loader');
-  const socialCommentsElement = bigPictureElement.querySelector('.social__comment-count');
 
   const displayPopupImage = (photoId) => {
     const index = listPhotos.findIndex((photo) => photoId === photo.id.toString());
@@ -16,10 +14,7 @@ const renderPopup = (listPhotos) => {
     popupImage.alt = description;
     bigPictureElement.querySelector('.social__caption').textContent = description;
     bigPictureElement.querySelector('.likes-count').textContent = likes;
-    bigPictureElement.querySelector('.social__comment-total-count').textContent = comments.length;
-    bigPictureElement.querySelector('.social__comment-shown-count').textContent = comments.length;
-    clearComments();
-    addComments(comments);
+    displayComments(comments);
   };
 
   const closePopup = () => {
@@ -38,8 +33,6 @@ const renderPopup = (listPhotos) => {
   const openPopup = () => {
     bigPictureElement.classList.remove('hidden');
     document.body.classList.add('modal-open');
-    commentsLoaderElement.classList.add('hidden');
-    socialCommentsElement.classList.add('hidden');
     document.addEventListener('keydown', onEscKeydown);
   };
 
