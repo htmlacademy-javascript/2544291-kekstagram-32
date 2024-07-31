@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { resetScale } from './scale.js';
+import { resetEffect, initialSlider } from './effect.js';
 
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
@@ -26,6 +28,7 @@ const openForm = () => {
   imgOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
+  initialSlider();
 };
 
 const onFileInputChange = () => {
@@ -39,6 +42,8 @@ const onFileInputChange = () => {
 const closeForm = () => {
   form.reset();
   pristine.reset();
+  resetScale();
+  resetEffect();
   imgOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscKeydown);
