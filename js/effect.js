@@ -124,10 +124,10 @@ const updateSlider = ({min, max, step}) => {
 const setSlider = () => {
   if (isDefault()) {
     hideSlider();
-  } else {
-    updateSlider(effectToSliderOptions[chosenEffect]);
-    showSlider();
+    return;
   }
+  updateSlider(effectToSliderOptions[chosenEffect]);
+  showSlider();
 };
 
 const setEffect = (effect) => {
