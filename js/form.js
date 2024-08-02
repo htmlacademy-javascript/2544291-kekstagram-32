@@ -4,10 +4,16 @@ import { resetEffect, initialSlider } from './effect.js';
 
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENT_LENGTH = 140;
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Хэштеги должны быть уникальными',
   INVALID_PATTERN: 'Невалидный хэштег',
+  INVALID_COMMENT: 'Длина комментария не может составлять больше 140 символов.',
+};
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SUBMITTING: 'Отправляю...',
 };
 
 const form = document.querySelector('.img-upload__form');
@@ -17,6 +23,7 @@ const inputFieldElement = form.querySelector('.img-upload__input');
 const hashtagFieldElement = form.querySelector('.text__hashtags');
 const descriptionFieldElement = form.querySelector('.text__description');
 const imgPreviewElement = form.querySelector('.img-upload__preview img');
+const submitButtonElement = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -49,11 +56,20 @@ const closeForm = () => {
   document.removeEventListener('keydown', onEscKeydown);
 };
 
+const toggleSubmitButton = (isDisabled) => {
+  submitButtonElement.disabled = isDisabled;
+  submitButtonElement.textContent = isDisabled
+    ? SubmitButtonText.SUBMITTING
+    : SubmitButtonText.IDLE;
+};
+
 const isTextFieldFocused = () =>
   document.activeElement === hashtagFieldElement || document.activeElement === descriptionFieldElement;
 
+const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
+
 function onEscKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextFieldFocused()) {
+  if (isEscapeKey(evt) && !isTextFieldFocused() && !isErrorMessageShown()) {
     evt.preventDefault();
     closeForm();
   }
@@ -78,19 +94,31 @@ const hasUniqueTags = (value) => {
 
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
+const validateComment = (value) => value.length <= MAX_COMMENT_LENGTH;
+
 pristine.addValidator(hashtagFieldElement, hasValidTags, ErrorText.INVALID_PATTERN, 2, true);
 
 pristine.addValidator(hashtagFieldElement, hasUniqueTags, ErrorText.NOT_UNIQUE, 1, true);
 
 pristine.addValidator(hashtagFieldElement, hasValidCount, ErrorText.INVALID_COUNT, 3, true);
 
-form.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
+pristine.addValidator(descriptionFieldElement, validateComment, ErrorText.INVALID_COMMENT, 4, true);
+
+const setOnFormSubmit = (callback) => {
+  form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-  }
-});
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      toggleSubmitButton(true);
+      await callback(new FormData(form));
+      toggleSubmitButton();
+    }
+  });
+};
 
 inputFieldElement.addEventListener('change', onFileInputChange);
 
 cancelButtonElement.addEventListener('click', onCancelButtonClick);
 
+export { setOnFormSubmit, closeForm };
