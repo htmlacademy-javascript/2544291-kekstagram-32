@@ -1,7 +1,17 @@
 const picturesListElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
 
+const imgFiltersContainerElement = document.querySelector('.img-filters');
+
+const removePictures = () => {
+  document.querySelectorAll('.picture').forEach((picture) => {
+    picture.remove();
+  });
+  imgFiltersContainerElement.classList.remove('img-filters--inactive');
+};
+
 const drawPictures = (pictures) => {
+  removePictures();
   pictures.forEach((picture) => {
     const pictureElement = pictureTemplateElement.cloneNode(true);
 

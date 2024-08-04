@@ -4,6 +4,7 @@ import { getData, sendData } from './api.js';
 import { showAlert } from './util.js';
 import { setOnFormSubmit, closeForm } from './form.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
+import { initializeFilters } from './filter.js';
 
 setOnFormSubmit(async (data) => {
   try {
@@ -18,6 +19,7 @@ setOnFormSubmit(async (data) => {
 try {
   const data = await getData();
   drawPictures(data);
+  initializeFilters(data);
   renderPopup(data);
 } catch {
   showAlert();

@@ -16,16 +16,16 @@ const SubmitButtonText = {
   SUBMITTING: 'Отправляю...',
 };
 
-const form = document.querySelector('.img-upload__form');
-const imgOverlayElement = form.querySelector('.img-upload__overlay');
-const cancelButtonElement = form.querySelector('.img-upload__cancel');
-const inputFieldElement = form.querySelector('.img-upload__input');
-const hashtagFieldElement = form.querySelector('.text__hashtags');
-const descriptionFieldElement = form.querySelector('.text__description');
-const imgPreviewElement = form.querySelector('.img-upload__preview img');
-const submitButtonElement = form.querySelector('.img-upload__submit');
+const formElement = document.querySelector('.img-upload__form');
+const imgOverlayElement = formElement.querySelector('.img-upload__overlay');
+const cancelButtonElement = formElement.querySelector('.img-upload__cancel');
+const inputFieldElement = formElement.querySelector('.img-upload__input');
+const hashtagFieldElement = formElement.querySelector('.text__hashtags');
+const descriptionFieldElement = formElement.querySelector('.text__description');
+const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
@@ -47,7 +47,7 @@ const onFileInputChange = () => {
 };
 
 const closeForm = () => {
-  form.reset();
+  formElement.reset();
   pristine.reset();
   resetScale();
   resetEffect();
@@ -105,13 +105,13 @@ pristine.addValidator(hashtagFieldElement, hasValidCount, ErrorText.INVALID_COUN
 pristine.addValidator(descriptionFieldElement, validateComment, ErrorText.INVALID_COMMENT, 4, true);
 
 const setOnFormSubmit = (callback) => {
-  form.addEventListener('submit', async (evt) => {
+  formElement.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
 
     if (isValid) {
       toggleSubmitButton(true);
-      await callback(new FormData(form));
+      await callback(new FormData(formElement));
       toggleSubmitButton();
     }
   });
