@@ -1,12 +1,13 @@
 const picturesListElement = document.querySelector('.pictures');
 const pictureTemplateElement = document.querySelector('#picture').content.querySelector('.picture');
-const currentButton = document.querySelector('.img-filters');
+
+const imgFiltersContainerElement = document.querySelector('.img-filters');
 
 const removePictures = () => {
   document.querySelectorAll('.picture').forEach((picture) => {
     picture.remove();
   });
-  currentButton.classList.remove('img-filters--inactive');
+  imgFiltersContainerElement.classList.remove('img-filters--inactive');
 };
 
 const drawPictures = (pictures) => {
