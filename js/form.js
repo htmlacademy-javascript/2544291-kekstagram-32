@@ -5,6 +5,7 @@ import { resetEffect, initialSlider } from './effect.js';
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
 const MAX_COMMENT_LENGTH = 140;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Хэштеги должны быть уникальными',
@@ -24,6 +25,7 @@ const hashtagFieldElement = formElement.querySelector('.text__hashtags');
 const descriptionFieldElement = formElement.querySelector('.text__description');
 const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
 const submitButtonElement = formElement.querySelector('.img-upload__submit');
+const effectsPreviewElemetns = formElement.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
@@ -38,10 +40,18 @@ const openForm = () => {
   initialSlider();
 };
 
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
 const onFileInputChange = () => {
   const file = inputFieldElement.files[0];
-  if (file) {
+  if (file && isValidType(file)) {
     imgPreviewElement.src = URL.createObjectURL(file);
+    effectsPreviewElemetns.forEach((preview) => {
+      preview.style.backgroundImage = `url('${imgPreviewElement.src}')`;
+    });
   }
   openForm();
 };
