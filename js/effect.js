@@ -99,16 +99,18 @@ const onSliderUpdate = () => {
 };
 
 const createSlider = ({min, max, step}) => {
-  noUiSlider.create(sliderElement, {
-    range: {min, max},
-    step,
-    start: max,
-    connect: 'lower',
-    format: {
-      to: (value) => Number(value),
-      from: (value) => Number(value),
-    }
-  });
+  if (typeof sliderElement.noUiSlider === 'undefined') {
+    noUiSlider.create(sliderElement, {
+      range: {min, max},
+      step,
+      start: max,
+      connect: 'lower',
+      format: {
+        to: (value) => Number(value),
+        from: (value) => Number(value),
+      }
+    });
+  }
   sliderElement.noUiSlider.on('update', onSliderUpdate);
   hideSlider();
 };
