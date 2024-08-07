@@ -25,7 +25,7 @@ const hashtagFieldElement = formElement.querySelector('.text__hashtags');
 const descriptionFieldElement = formElement.querySelector('.text__description');
 const imgPreviewElement = formElement.querySelector('.img-upload__preview img');
 const submitButtonElement = formElement.querySelector('.img-upload__submit');
-const effectsPreviewElemetns = formElement.querySelectorAll('.effects__preview');
+const effectsPreviewElements = formElement.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
@@ -49,7 +49,7 @@ const onFileInputChange = () => {
   const file = inputFieldElement.files[0];
   if (file && isValidType(file)) {
     imgPreviewElement.src = URL.createObjectURL(file);
-    effectsPreviewElemetns.forEach((preview) => {
+    effectsPreviewElements.forEach((preview) => {
       preview.style.backgroundImage = `url('${imgPreviewElement.src}')`;
     });
   }
